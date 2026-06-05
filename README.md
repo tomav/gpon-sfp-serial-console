@@ -110,6 +110,7 @@ module.
 | **CarlitoxxPro CPGOS03-0490 v2.0** | Realtek RTL9601C · GPON | **2 & 7** | 115200 8N1 | Reference hardware for Carlito firmware. |
 | **Nokia / Alcatel G-010S-P** | GPON | **2 & 7** | 115200 8N1 | Console on pin 2; swap to 7 if nothing appears. The **G-010S-Q** variant is Realtek RTL9601CI. |
 | **BFW WAS-110** (a.k.a. X-2010G-2) | MaxLinear PRX126 · XGS-PON | **2 & 7** | 115200 8N1 | The 8311-community flagship. Console can be toggled in U-Boot (`8311_console_en`, `uart_select`). Spam `Esc` at power-on to drop into U-Boot. |
+| **FS.com XGS-ONU-25-20NI** | CIG · XGS-PON | 2 & 7 *(family default — confirm)* | 115200 8N1 | FS.com XGS-PON stick, CIG-based: dual firmware slots, mgmt IP `192.168.100.1`, runs `/mnt/rwdir/setup.sh` at boot. A bad flash that breaks the PON stack needs UART to recover. Exact UART pins not yet independently confirmed. |
 
 > **Realtek RTL960x family** (RTL8672 / RTL9601C / RTL9601CI / RTL9601D): the V2801F,
 > TWCGPON657, DFP-34X-2C2, U-Fiber Instant, FS.com, CarlitoxxPro, C-Data FD511GX-RM0,
