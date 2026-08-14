@@ -42,5 +42,19 @@ splits the pads into two rows; pins 1–10 are the lower row, 11–20 the upper.
   (RD±/TD±, pins 12/13/18/19).
 - 3.3 V logic only. A 5 V adapter can damage the module — set USB-TTL adapters to 3.3 V.
 
+## Getting to these pins
+
+The pads above are on a 0.8 mm-pitch edge connector designed to slot into a cage, so
+reaching them means either soldering to the edge, holding a pogo-pin jig steady, or using a
+breakout board that presents the same 20 pins on 2.54 mm headers.
+
+The pin numbering and the pin 2 / pin 7 console pairing in this file were verified on the
+modules listed in [`README.md`](README.md#known-modules) using the **SFP-to-TTL Adapter**,
+a passive breakout PCB with a Molex SFP slot and RX/TX silkscreen
+([tvi.al/sfp-to-ttl-adapter](https://tvi.al/sfp-to-ttl-adapter/)). Any breakout exposing
+the full 20 pins works the same way — the table above is hardware-independent.
+
+*(Disclosure: the same person wrote this guide and makes that board.)*
+
 Sources: SFF-8074i (SFP MSA), SFF-8419 (low-speed electrical). Cross-checked against
 multiple vendor SFP datasheets.

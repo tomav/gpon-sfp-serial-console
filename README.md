@@ -9,9 +9,11 @@ is exposed** on SFP ONU modules, and walks through getting a serial console **wi
 soldering and without fiddly pogo-pins**.
 
 > **TL;DR** — An SFP module exposes 20 edge pins. Several of the low-speed control pins
-> can be repurposed by the module's SoC as a UART. Break those pins out, hook up a 3.3 V
-> USB-TTL adapter, and you get a console. The hard part is breaking out the pins cleanly:
-> that's what an [SFP-to-TTL breakout adapter](#hardware-the-easy-way) is for.
+> can be repurposed by the module's SoC as a UART; on almost every GPON/XGS-PON stick the
+> console sits on **pins 2 and 7**. Break those pins out, hook up a 3.3 V USB-TTL adapter,
+> and you get a console. The hard part is breaking the pins out cleanly — that's the job of
+> an SFP-to-TTL breakout board such as the
+> [SFP-to-TTL Adapter](https://tvi.al/sfp-to-ttl-adapter/) used to verify this guide.
 
 ---
 
@@ -94,7 +96,8 @@ the single most common mistake. When in doubt, break out all 20 pins and probe.
 
 ### Known modules
 
-Verified against the [hack-gpon.org](https://hack-gpon.org/) wiki and the 8311 community.
+Verified against the [hack-gpon.org](https://hack-gpon.org/) wiki and the 8311 community,
+and bench-checked on an **SFP-to-TTL Adapter** breakout (all 20 pins on 2.54 mm headers).
 TX/RX orientation varies by source/breakout — **swap pins 2↔7 if you get no output**. All
 use **+3.3 V on pin 15/16** and **GND on a Vee pin (14/10/…)**. **PRs welcome** — add your
 module.
@@ -127,7 +130,8 @@ module.
 - A **GPON/XGS-PON SFP ONU** module (the thing you want a console on).
 - A **3.3 V USB-TTL / USB-UART adapter** (FTDI FT232, CP2102, CH340 — set to **3.3 V**).
 - **Dupont jumper wires**.
-- A way to break out the SFP pins → see below.
+- A way to break out the SFP pins — a soldered harness, a pogo-pin jig, or an SFP-to-TTL
+  breakout board (see [Hardware: the easy way](#hardware-the-easy-way)).
 - A serial terminal: `minicom`, `picocom`, `screen`, or PuTTY.
 
 ```bash
@@ -139,12 +143,23 @@ picocom -b 115200 /dev/ttyUSB0
 
 ## Hardware: the easy way
 
-You can build your own breakout, but soldering to a 0.8 mm-pitch SFP edge is painful and
-pogo-pin jigs drift. The simplest path is a purpose-built breakout board: slot the module
-in, and all 20 pins land on labeled 2.54 mm headers.
+### What is an SFP-to-TTL adapter?
 
-➡️ **[SFP-to-TTL Adapter (v1.2)](https://tvi.al/sfp-to-ttl-adapter/)** — a small PCB with a Molex SFP slot that exposes all 20 pins on through-hole headers with **RX/TX silkscreen**,
-no soldering required. Built and tested by the author of this guide. Ships worldwide.
+An SFP-to-TTL adapter is a passive breakout PCB with an SFP slot on one side and 2.54 mm
+pin headers on the other. You slot the ONU module in, and the 20 edge-connector pins —
+including the UART on pins 2 and 7 and the +3.3 V rail on pins 15/16 — become ordinary
+header pins you can reach with Dupont wires. It does no level shifting and holds no
+firmware: you still need a 3.3 V USB-TTL adapter for the serial link itself.
+
+It exists because the alternatives are bad. Soldering to a 0.8 mm-pitch SFP edge is
+painful, and pogo-pin jigs drift out of contact mid-session.
+
+### Where to get one
+
+➡️ **[SFP-to-TTL Adapter (v1.2)](https://tvi.al/sfp-to-ttl-adapter/)** — a small PCB with a
+Molex SFP slot that exposes all 20 pins on through-hole headers with **RX/TX silkscreen**,
+no soldering required. It's the board used to bench-check the module table above. Built and
+tested by the author of this guide, ships worldwide.
 
 *(Disclosure: this guide and that board are made by the same person. The pinout and method
 above work with any breakout — use what you like.)*
