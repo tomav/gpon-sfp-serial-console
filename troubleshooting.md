@@ -64,7 +64,7 @@ pin, console almost always on pins 2 & 7 — swap 2 ↔ 7 if silent.**
 
 | Module | UART pins | Baud | Notes |
 |--------|-----------|------|-------|
-| Nokia / Alcatel **G-010S-A** | 2 & 7 *(family default; try 2, swap to 7)* | 115200 8N1 | Same Nokia family as G-010S-P. |
+| Nokia / Alcatel **G-010S-A** | 3 & 6 *(TX pin 3, RX pin 6; GND 14 or 10)* | 115200 8N1 | **-A is Lantiq PEB98035** (same SoC as Huawei MA5671A), **not** the family 2 & 7. Per hack-gpon.org. Swap TX/RX if silent. |
 | Nokia / Alcatel **G-010S-P** | 2 & 7 (console on 2, swap to 7) | 115200 8N1 | — |
 | Nokia / Alcatel **G-010S-Q** | 2 & 7 | 115200 8N1 | Realtek RTL9601CI inside. |
 | Huawei **MA5671A** | 2 & 7 | 115200 8N1 | Stock firmware also has SSH (`root` / `admin123`). |
