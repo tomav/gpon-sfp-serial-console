@@ -22,19 +22,25 @@ link wiring or settings**, not the board. So don't worry — you're closer than 
 Do these in order. Each is harmless.
 
 1. **Confirm it's booting.** Module warm = powered = good.
-2. **Swap TX ↔ RX** (the two data wires, pins 2 ↔ 7). *This is the single most common fix.*
+2. **Look up your module's console pins** in the
+   [per-module table](#per-module-quick-reference) before wiring anything. The SFP MSA never
+   defined a UART, so every vendor reuses whichever low-speed pins its SoC left free: most
+   sticks are on **2 & 7**, but the Nokia G-010S-A is on **3 & 6**. Probing 2 & 7 on a module
+   that doesn't use them is a dead end that looks exactly like a dead module. If yours isn't
+   listed, start with 2 & 7 and fall back to 4 & 5, then 8 & 9.
+3. **Swap TX ↔ RX** (your module's two console pins). *This is the single most common fix.*
    Which pin is TX vs RX is labeled inconsistently across modules, so just swap and retry.
-3. **Add a common ground.** TX/RX alone don't work — connect the module's ground (any Vee
+4. **Add a common ground.** TX/RX alone don't work — connect the module's ground (any Vee
    pin: 1 / 10 / 11 / 14 / 17 / 20) to your adapter's / Pi's GND.
-4. **Use 3.3 V only.** No Arduino Uno, no 5 V FTDI. Use a 3.3 V USB-TTL adapter
+5. **Use 3.3 V only.** No Arduino Uno, no 5 V FTDI. Use a 3.3 V USB-TTL adapter
    (FTDI / CP2102 / CH340 set to 3.3 V) or the Raspberry Pi's GPIO UART.
-5. **Serial settings:** 115200 baud, 8N1, no flow control.
-6. **On a Raspberry Pi:** enable the real UART and get off the flaky mini-UART:
+6. **Serial settings:** 115200 baud, 8N1, no flow control.
+7. **On a Raspberry Pi:** enable the real UART and get off the flaky mini-UART:
    - add `enable_uart=1` and `dtoverlay=disable-bt` to `/boot/config.txt`,
    - disable the serial **login shell** (`sudo raspi-config` → Interface → Serial →
      login shell **OFF**, serial hardware **ON**),
    - then `picocom -b 115200 /dev/ttyAMA0` (or `screen /dev/ttyAMA0 115200`).
-7. **Still silent?** Take a clear photo of your wiring (both ends) noting which pin goes
+8. **Still silent?** Take a clear photo of your wiring (both ends) noting which pin goes
    where — that's usually enough to spot it.
 
 ---
@@ -43,9 +49,9 @@ Do these in order. Each is harmless.
 
 | Symptom | Most likely cause | Fix |
 |---------|-------------------|-----|
-| Module warms up, **no serial output** | TX/RX swapped | Swap the two data wires (2 ↔ 7). #1 cause, harmless. |
+| Module warms up, **no serial output** | TX/RX swapped | Swap the two console wires (2 ↔ 7 on most modules). #1 cause, harmless. |
 | Module warms up, no output | **No common ground** | Connect module GND (a Vee pin) to adapter/Pi GND. |
-| Module warms up, no output | Console not on pins 2/7 | Try SDA/SCL (4/5), then RX_LOS/RS1 (8/9). Break out all 20 and probe. |
+| Module warms up, no output | Console is not on the pins you assumed | Check your module's row in the table below — the G-010S-A is **3 & 6**, not 2 & 7. Then try SDA/SCL (4/5), then RX_LOS/RS1 (8/9). Break out all 20 and probe. |
 | Using an **Arduino Uno** as bridge | Uno UART is **5 V** — wrong level, and not a transparent bridge | Use a 3.3 V USB-TTL or the Pi's GPIO UART instead. 5 V can damage the module. |
 | **Garbage / gibberish** characters | Wrong baud, or 5 V logic | Set 115200 8N1. Confirm the adapter is 3.3 V. Some modules use 9600 / 38400. |
 | Output shows, but **you can't type** | RX line missing, or flow control on | Wire module-RX ← adapter-TX. Disable HW/SW flow control. |
@@ -59,8 +65,9 @@ Do these in order. Each is harmless.
 ## Per-module quick reference
 
 Console pins, baud, quirks. Full list and Realtek-family notes in
-[`README.md`](README.md#known-modules). **For any module: +3.3 V on pin 15/16, GND on a Vee
-pin, console almost always on pins 2 & 7 — swap 2 ↔ 7 if silent.**
+[`README.md`](README.md#known-modules). **Power and ground are the same for every module:
++3.3 V on pin 15/16, GND on a Vee pin. The console pins are not** — they vary by vendor, so
+find your row below before wiring. **2 & 7 is the most common default, not a rule.**
 
 | Module | UART pins | Baud | Notes |
 |--------|-----------|------|-------|
