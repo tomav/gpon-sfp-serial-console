@@ -9,9 +9,11 @@ is exposed** on SFP ONU modules, and walks through getting a serial console **wi
 soldering and without fiddly pogo-pins**.
 
 > **TL;DR** — An SFP module exposes 20 edge pins. Several of the low-speed control pins
-> can be repurposed by the module's SoC as a UART; on almost every GPON/XGS-PON stick the
-> console sits on **pins 2 and 7**. Break those pins out, hook up a 3.3 V USB-TTL adapter,
-> and you get a console. The hard part is breaking the pins out cleanly — that's the job of
+> can be repurposed by the module's SoC as a UART, and there is no standard saying which:
+> on most GPON/XGS-PON sticks the console sits on **pins 2 and 7**, but some do not — the
+> Nokia G-010S-A uses **3 and 6**. Check your module in the table below first, break the
+> right pins out, hook up a 3.3 V USB-TTL adapter, and you get a console. The hard part is
+> breaking the pins out cleanly — that's the job of
 > an SFP-to-TTL breakout board such as the
 > [SFP-to-TTL Adapter](https://tvi.al/sfp-to-ttl-adapter/) used to verify this guide.
 
@@ -148,8 +150,9 @@ picocom -b 115200 /dev/ttyUSB0
 
 An SFP-to-TTL adapter is a passive breakout PCB with an SFP slot on one side and 2.54 mm
 pin headers on the other. You slot the ONU module in, and the 20 edge-connector pins —
-including the UART on pins 2 and 7 and the +3.3 V rail on pins 15/16 — become ordinary
-header pins you can reach with Dupont wires. It does no level shifting and holds no
+including the UART pins (2 and 7 on most modules) and the +3.3 V rail on pins 15/16 —
+become ordinary header pins you can reach with Dupont wires. It does no level shifting and
+holds no
 firmware: you still need a 3.3 V USB-TTL adapter for the serial link itself.
 
 It exists because the alternatives are bad. Soldering to a 0.8 mm-pitch SFP edge is

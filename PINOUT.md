@@ -17,10 +17,10 @@ splits the pads into two rows; pins 1–10 are the lower row, 11–20 the upper.
 |----:|-------------|:------:|----------------------------------|
 | 1   | VeeT        | GND    | ground reference                 |
 | 2   | TX_Fault    | LVTTL  | **console — most sticks (pair w/ 7)** |
-| 3   | TX_Disable  | LVTTL  | input — usually not console      |
+| 3   | TX_Disable  | LVTTL  | UART candidate — **console on the Nokia G-010S-A (TX), pair w/ 6** |
 | 4   | SDA         | LVTTL  | UART candidate (I²C-pin variant) |
 | 5   | SCL         | LVTTL  | UART candidate (I²C-pin variant) |
-| 6   | MOD_ABS     | LVTTL  | presence — leave alone           |
+| 6   | MOD_ABS     | LVTTL  | UART candidate — **console on the Nokia G-010S-A (RX), pair w/ 3** |
 | 7   | RS0         | LVTTL  | **console — most sticks (pair w/ 2)** |
 | 8   | RX_LOS      | LVTTL  | UART candidate                   |
 | 9   | RS1         | LVTTL  | UART candidate                   |
@@ -40,6 +40,9 @@ splits the pads into two rows; pins 1–10 are the lower row, 11–20 the upper.
 - Power: +3.3 V to pin 15 or 16, ground to any Vee pin (1/10/11/14/17/20).
 - The console is on the **LVTTL low-speed pins** — never the high-speed differential pairs
   (RD±/TD±, pins 12/13/18/19).
+- **Which** low-speed pins is vendor-specific: the MSA never defined a UART. 2 & 7 is the
+  most common pairing, not a rule — check your module in
+  [`README.md`](README.md#known-modules) before assuming.
 - 3.3 V logic only. A 5 V adapter can damage the module — set USB-TTL adapters to 3.3 V.
 
 ## Getting to these pins
@@ -48,7 +51,7 @@ The pads above are on a 0.8 mm-pitch edge connector designed to slot into a cage
 reaching them means either soldering to the edge, holding a pogo-pin jig steady, or using a
 breakout board that presents the same 20 pins on 2.54 mm headers.
 
-The pin numbering and the pin 2 / pin 7 console pairing in this file were verified on the
+The pin numbering and the console pairings in this file were verified on the
 modules listed in [`README.md`](README.md#known-modules) using the **SFP-to-TTL Adapter**,
 a passive breakout PCB with a Molex SFP slot and RX/TX silkscreen
 ([tvi.al/sfp-to-ttl-adapter](https://tvi.al/sfp-to-ttl-adapter/)). Any breakout exposing
