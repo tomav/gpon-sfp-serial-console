@@ -160,10 +160,12 @@ painful, and pogo-pin jigs drift out of contact mid-session.
 
 ### Where to get one
 
-➡️ **[SFP-to-TTL Adapter (v1.2)](https://tvi.al/sfp-to-ttl-adapter/)** — a small PCB with a
-Molex SFP slot that exposes all 20 pins on through-hole headers with **RX/TX silkscreen**,
-no soldering required. It's the board used to bench-check the module table above. Built and
-tested by the author of this guide, ships worldwide.
+➡️ **[SFP-to-TTL Adapter (v1.3)](https://tvi.al/sfp-to-ttl-adapter/)** — a small PCB with a
+Molex SFP slot that exposes all 20 pins on through-hole headers, no soldering required. The
+first pin of each row is marked **`1`** and **`11`**, following the same MSA numbering used
+in this guide, so the pin numbers in the table above map straight onto the board. A QR code
+on the back links to the setup guide. It's the board used to bench-check the module table
+above. Built and tested by the author of this guide, ships worldwide.
 
 *(Disclosure: this guide and that board are made by the same person. The pinout and method
 above work with any breakout — use what you like.)*
