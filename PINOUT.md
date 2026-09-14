@@ -53,8 +53,8 @@ breakout board that presents the same 20 pins on 2.54 mm headers.
 
 The pin numbering and the console pairings in this file were verified on the
 modules listed in [`README.md`](README.md#known-modules) using the **SFP-to-TTL Adapter**,
-a passive breakout PCB with a Molex SFP slot and RX/TX silkscreen
-([tvi.al/sfp-to-ttl-adapter](https://tvi.al/sfp-to-ttl-adapter/)). Any breakout exposing
+a passive breakout PCB with a Molex SFP slot whose headers carry the same MSA numbering used
+above ([tvi.al/sfp-to-ttl-adapter](https://tvi.al/sfp-to-ttl-adapter/)). Any breakout exposing
 the full 20 pins works the same way — the table above is hardware-independent.
 
 *(Disclosure: the same person wrote this guide and makes that board.)*
