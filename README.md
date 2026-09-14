@@ -111,11 +111,12 @@ module.
 | **T&W TWCGPON657** | Realtek RTL9601CI · GPON | **2 & 7** | 115200 8N1 | Same SoC as the V2801F, 16 MB NAND. Same auto-reboot fix. |
 | **ODI DFP-34X-2C2** | Realtek RTL9601D · GPON | **2 & 7** | 115200 8N1 | Newer/cheaper, runs cool, transparent bridge. Best pick for 4-port ONU emulation. |
 | **Ubiquiti U-Fiber Instant** (UF-INSTANT) | Realtek RTL9601CI · GPON | **2 & 7** | 115200 8N1 | Rebranded Realtek stick. |
-| **FS.com GPON-ONU-34-20BI** | Realtek RTL960x · GPON | **2 & 7** | 115200 8N1 | FS.com rebrand of the Realtek family. |
+| **FS.com GPON-ONU-34-20BI** | Lantiq Falcon · GPON | **2 & 7** | 115200 8N1 | Boot log reads `U-Boot 2011.12-lantiq-gpon`, build `falcon_sfp_linux` — confirmed on a unit, so **not** the Realtek family it is often listed under. |
 | **CarlitoxxPro CPGOS03-0490 v2.0** | Realtek RTL9601C · GPON | **2 & 7** | 115200 8N1 | Reference hardware for Carlito firmware. |
 | **Nokia / Alcatel G-010S-A** | Lantiq PEB98035 · GPON | **3 & 6** | 115200 8N1 | The **-A** variant is **Lantiq**-based — same SoC as the Huawei MA5671A — not Realtek like the -Q. UART: **TX pin 3, RX pin 6, GND pin 14 (or 10)** per hack-gpon.org. Swap TX/RX if no output. |
 | **Nokia / Alcatel G-010S-P** | GPON | **2 & 7** | 115200 8N1 | Console on pin 2; swap to 7 if nothing appears. Sibling variants differ by SoC: the **-A** is Lantiq PEB98035, the **-Q** is Realtek RTL9601CI. |
 | **BFW WAS-110** (a.k.a. X-2010G-2) | MaxLinear PRX126 · XGS-PON | **2 & 7** | 115200 8N1 | The 8311-community flagship. Console can be toggled in U-Boot (`8311_console_en`, `uart_select`). Spam `Esc` at power-on to drop into U-Boot. |
+| **FS.com GPON-SFP-ONT-MAC-I** | ⚠️ **SKU-dependent** · GPON | Depends on the SKU — see notes | 115200 8N1 | Same product name, different silicon depending on the SKU. `133619` = Lantiq PEB98035 (pins 2 & 7, identical to the `GPON-ONU-34-20BI`), the only variant the FS modded firmware is built for. `351553` = **Galachip 1601** (Faraday FA626TE), a third platform whose console pins are not confirmed. FS support has been known to treat the two SKUs as interchangeable — they are not, and flashing the modded image on the wrong one bricks the stick. Check `cat /proc/cpuinfo` over SSH before flashing anything. |
 | **FS.com XGS-ONU-25-20NI** | CIG · XGS-PON | 2 & 7 *(family default — confirm)* | 115200 8N1 | FS.com XGS-PON stick, CIG-based: dual firmware slots, mgmt IP `192.168.100.1`, runs `/mnt/rwdir/setup.sh` at boot. A bad flash that breaks the PON stack needs UART to recover. Exact UART pins not yet independently confirmed. |
 
 > **Realtek RTL960x family** (RTL8672 / RTL9601C / RTL9601CI / RTL9601D): the V2801F,

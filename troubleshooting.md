@@ -58,6 +58,7 @@ Do these in order. Each is harmless.
 | Module **doesn't warm up** | No / weak power | +3.3 V on pin 15 or 16, GND on a Vee pin. GPON sticks pull up to ~1.5 A peak — a Pi 3.3 V rail is often too weak; use a dedicated 3.3 V supply. |
 | Pi: nothing on `/dev/ttyS0`, unstable baud | Pi mini-UART on GPIO by default | `enable_uart=1` + `dtoverlay=disable-bt` → use `/dev/ttyAMA0` (stable PL011). |
 | Pi: garbage / a login prompt fights you | Linux console (getty) owns the port | `raspi-config` → Serial → login shell OFF, hardware ON. |
+| **Absolute silence** — not one character, ever | The signal path is broken, or the console is disabled in firmware — *not* a weak supply | A brown-out still emits a few characters before cutting out, so total silence means nothing is getting through at all: wrong pins, an unconnected wire, a dead USB-TTL or missing VCC. Loop the adapter's own TX to its RX and type — if your characters don't echo back, the module was never the problem. If the stick answers on SSH, check `cat /proc/cmdline` for a `console=` entry: without one, no wiring will ever produce output. |
 | Module **reboots every few seconds** | OMCI / firmware — *not* the adapter | Realtek family needs `OMCI_FAKE_OK`; normal until registered on the network. |
 
 ---
@@ -76,6 +77,7 @@ find your row below before wiring. **2 & 7 is the most common default, not a rul
 | Nokia / Alcatel **G-010S-Q** | 2 & 7 | 115200 8N1 | Realtek RTL9601CI inside. |
 | Huawei **MA5671A** | 2 & 7 | 115200 8N1 | Stock firmware also has SSH (`root` / `admin123`). |
 | **Realtek RTL960x family** (V2801F, TWCGPON657, DFP-34X, U-Fiber Instant, FS.com, CarlitoxxPro…) | 2 & 7 | 115200 8N1 | A permanent "TX Fault" state is normal (serial shares the TX_Fault pin). Needs `OMCI_FAKE_OK` or it auto-reboots. |
+| **FS.com GPON-SFP-ONT-MAC-I** | **Depends on the SKU** — see notes | 115200 8N1 | ⚠️ Sold under several SKUs that do **not** share a SoC. `133619` = Lantiq PEB98035 (pins 2 & 7, same platform as the Huawei MA5671A). `351553` = **Galachip 1601**, a Faraday FA626TE core — a third platform, console pins not confirmed. FS support has offered `351553` as a drop-in replacement for `133619`: it is not one. The FS modded firmware targets the Lantiq SKU only and bricks the others. If the stock firmware answers on SSH, `cat /proc/cpuinfo` settles it in seconds. |
 | **BFW WAS-110** (X-2010G-2, XGS-PON) | 2 & 7 | 115200 8N1 | Spam `Esc` at power-on for U-Boot. Console toggle: `8311_console_en`, `uart_select`. |
 
 ---
